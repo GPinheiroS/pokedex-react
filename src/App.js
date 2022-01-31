@@ -68,14 +68,13 @@ function App() {
           setPokemanos((currentList) => [...currentList, data]);
           loading = true;
           if (index === pokemanos.length - 1) loading = false;
-          console.log(loading);
         });
       };
       endOfLoading();
     }
     pokemonObject(data.results);
   };
-  console.log(pokemanos);
+
   useEffect(() => {
     getAllpokemanos();
   }, []);
