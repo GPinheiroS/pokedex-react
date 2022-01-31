@@ -60,17 +60,17 @@ function App() {
       const endOfLoading = () => {
         result.forEach(async (pokemon, index) => {
           index = index + 1;
+          loading = true;
           const res = await fetch(
             `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
           );
           const data = await res.json();
 
           setPokemanos((currentList) => [...currentList, data]);
-          loading = true;
           if (index === pokemanos.length - 1) loading = false;
         });
       };
-      endOfLoading();
+      endOfLoading(loading);
     }
     pokemonObject(data.results);
   };

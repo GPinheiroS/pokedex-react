@@ -33,48 +33,63 @@ code {
 }
 .rock {
   --bcolor: hsl(0, 29.3%, 70%);
+  --tcolor: hsl(0, 29.3%, 60%);
 }
 .ghost {
   --bcolor: hsl(240, 33%, 70%);
+  --tcolor: hsl(240, 33%, 60%);
 }
 .electric {
   --bcolor: hsl(60, 100%, 75%);
+  --tcolor: hsl(60, 80%, 45%);
 }
 .bug {
   --bcolor: hsl(35.7, 81.4%, 75%);
+  --tcolor: hsl(35.7, 81.4%, 65%);
 }
 .poison {
   --bcolor: hsl(283.3, 81.4%, 75%);
+  --tcolor: hsl(283.3, 81.4%, 65%);
 }
 .normal {
   --bcolor: hsl(0, 0%, 75%);
+  --tcolor: hsl(0, 0%, 65%);
 }
 .fairy {
   --bcolor: hsl(350.1, 100%, 75%);
+  --tcolor: hsl(350.1, 100%, 65%);
 }
 .fire {
   --bcolor: hsl(0, 77.1%, 65%);
+  --tcolor: hsl(0, 77.1%, 55%);
 }
 .grass {
   --bcolor: hsl(117.8, 100%, 75%);
+  --tcolor: hsl(117.8, 100%, 60%);
 }
 .water {
   --bcolor: hsl(204.8, 87.9%, 75%);
+  --tcolor: hsl(204.8, 87.9%, 65%);
 }
 .ground {
   --bcolor: hsl(38.6, 41.7%, 75%);
+  --tcolor: hsl(38.6, 41.7%, 65%);
 }
 .fighting {
   --bcolor: hsl(12.6, 61%, 75%);
+  --tcolor: hsl(12.6, 61%, 65%);
 }
 .psychic {
   --bcolor: hsl(338.8, 80.4%, 75%);
+  --tcolor: hsl(338.8, 80.4%, 65%);
 }
 .ice {
   --bcolor: hsl(193.8, 86.7%, 75%);
+  --tcolor: hsl(193.8, 86.7%, 65%);
 }
 .dragon {
   --bcolor: hsl(250, 67%, 75%);
+  --tcolor: hsl(250, 67%, 65%);
 }
 .app-container {
   display: flex;
@@ -167,13 +182,12 @@ p {
   align-items: center;
   justify-content: center;
   margin: 5px;
-  box-shadow: inset 0 0 5em rgba(131, 121, 121, 0.34);
-  /* background-color: rgba(255, 255, 255, 0.15); */
-  /* border: solid 2px white; */
+  background-color: var(--tcolor);
   width: 80px;
   height: 30px;
   border-radius: 30px;
   text-align: center;
+  font-weight: bold;
 }
 
 .poke-type p::first-letter {
