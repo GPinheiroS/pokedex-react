@@ -1,21 +1,38 @@
 import React from "react";
-import { Fragment } from "react/cjs/react.development";
 
-const PokemanosThumb = ({ id, name, image, type }) => {
+const PokemanosThumb = ({ name, hp, att, def, spd, image, type }) => {
   const CorTipo = `thumb-container ${type}`;
 
   return (
     <>
-    <div className={CorTipo}>
-      <div className="thumb-container">
-        <small>#0{id}</small>
-        <img src={image} alt={name} />
+      <div>
+        <div className={CorTipo}>
+          <p className="hp">
+            <span>HP {hp}</span>
+          </p>
+          <div className="poke-img">
+            <img src={image} alt={name} />
+          </div>
+          <h2 className="poke-name">{name}</h2>
+          <div className="poke-type">
+            <p>{type}</p>
+          </div>
+          <div className="poke-stats">
+            <div className="stats">
+              <h3>{att}</h3>
+              <p>Attack</p>
+            </div>
+            <div className="stats">
+              <h3>{def}</h3>
+              <p>Defense</p>
+            </div>
+            <div className="stats">
+              <h3>{spd}</h3>
+              <p>Speed</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="detail-wrapper">
-        <h3>{name}</h3>
-        <h1>Type: {type}</h1>
-      </div>
-    </div>
     </>
   );
 };

@@ -1,66 +1,106 @@
 import { useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
+
 import PokemanosThumb from "./components/PokemanosThumb";
 
 function App() {
+  const ele = document.querySelector(".all-container");
+  let pressed = false;
+  let pos = { left: 0, x: 0 };
   let scrollWidth = 0;
+
+  if (ele) {
+    ele.addEventListener("mousedown", (e) => {
+      pressed = true;
+      pos = {
+        left: ele.scrollLeft,
+        x: e.clientX,
+      };
+      ele.style.cursor = "grabbing";
+    });
+    ele.addEventListener("mouseenter", () => {
+      ele.style.cursor = "grab";
+    });
+    ele.addEventListener("mouseup", () => {
+      ele.style.cursor = "grab";
+    });
+    ele.addEventListener("mouseup", () => {
+      pressed = false;
+    });
+    ele.addEventListener("mousemove", (e) => {
+      if (!pressed) return;
+      const dx = e.clientX - pos.x;
+      ele.scroll(pos.left - dx, 0);
+    });
+  }
+
   const previousSlideHandler = () => {
     const slider = document.querySelector(".all-container");
+    slider.style.scrollBehavior = "smooth";
     if (scrollWidth > 0) scrollWidth = slider.scrollLeft - 500;
     slider.scroll(scrollWidth, 0);
+    slider.style.scrollBehavior = "auto";
   };
   const nextSlideHandler = () => {
     const slider = document.querySelector(".all-container");
+    slider.style.scrollBehavior = "smooth";
     scrollWidth = slider.scrollLeft + 500;
     slider.scroll(scrollWidth, 0);
+    slider.style.scrollBehavior = "auto";
   };
 
   const [pokemanos, setPokemanos] = useState([]);
-  const [carregar, setCarregar] = useState(
-    "https://pokeapi.co/api/v2/pokemon?limit=151"
-  );
+  const carregar = "https://pokeapi.co/api/v2/pokemon?limit=151";
+  let loading = false;
 
   const getAllpokemanos = async () => {
     const res = await fetch(carregar);
     const data = await res.json();
 
     function pokemonObject(result) {
-      result.forEach(async (pokemon) => {
-        const res = await fetch(
-          `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
-        );
-        const data = await res.json();
+      const endOfLoading = () => {
+        result.forEach(async (pokemon, index) => {
+          index = index + 1;
+          const res = await fetch(
+            `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
+          );
+          const data = await res.json();
 
-        setPokemanos((currentList) => [...currentList, data]);
-      });
+          setPokemanos((currentList) => [...currentList, data]);
+          loading = true;
+          if (index === pokemanos.length - 1) loading = false;
+          console.log(loading);
+        });
+      };
+      endOfLoading();
     }
     pokemonObject(data.results);
   };
-
+  console.log(pokemanos);
   useEffect(() => {
     getAllpokemanos();
   }, []);
 
   return (
     <div className="app-container">
-      <h1>Vamo la</h1>
       <div className="pokemon-container">
         <div className="all-container">
           <button className="btn prevSlide" onClick={previousSlideHandler}>
-          {"<"}
+            {"<"}
           </button>
           {pokemanos.map((pokemons, index) => (
             <PokemanosThumb
-              id={pokemons.id}
               name={pokemons.name}
-              image={pokemons.sprites.front_default}
+              hp={pokemons.stats[0].base_stat}
+              att={pokemons.stats[1].base_stat}
+              def={pokemons.stats[2].base_stat}
+              spd={pokemons.stats[5].base_stat}
+              image={pokemons.sprites.other.dream_world.front_default}
               type={pokemons.types[0].type.name}
               key={index}
             />
           ))}
           <button className="btn nextSlide" onClick={nextSlideHandler}>
-           {">"}
+            {">"}
           </button>
         </div>
       </div>
