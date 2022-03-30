@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "Outfit";
+  src: url(./fonts/Outfit-Thin.ttf);
+}
 body {
   margin: 0;
   font-family: sans-serif;
@@ -98,6 +102,28 @@ code {
   justify-content: center;
   min-height: 100vh;
 }
+@keyframes pokegiro {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.background-pokeball {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(39, 45, 77, 255);
+}
+.background-pokeball img {
+  width: 50%;
+  animation: pokegiro 2s ease infinite;
+}
+
 .pokemon-container {
   display: flex;
   flex-direction: column;
@@ -132,6 +158,9 @@ code {
   box-sizing: content-box;
 
   text-align: center;
+  font-family: "Outfit";
+  font-weight: bolder;
+
   box-shadow: 0 3px 15px rgba(0, 0, 0, 0.089);
   pointer-events: none;
   user-select: none;
@@ -168,7 +197,6 @@ p {
 
   padding: 4px;
 
-  font-weight: 400;
   text-align: center;
   font-weight: bold;
 }
@@ -187,15 +215,17 @@ p {
   height: 30px;
   border-radius: 30px;
   text-align: center;
-  font-weight: bold;
+}
+.poke-type p {
+  font-size: 14px;
 }
 
 .poke-type p::first-letter {
   text-transform: uppercase;
 }
 .poke-name {
-  font-weight: 400;
   text-align: center;
+  font-weight: bolder;
 }
 .poke-name::first-letter {
   text-transform: uppercase;
@@ -211,7 +241,6 @@ p {
 }
 .poke-stats p {
   margin-top: -15px;
-  font-weight: 300;
   color: rgb(70, 70, 70);
 }
 .stats {

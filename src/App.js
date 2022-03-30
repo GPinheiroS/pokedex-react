@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import PokemanosThumb from "./components/PokemanosThumb";
+import Pokeball from "./BackgroundIcon/Pokeball.svg";
 
 function App() {
   const ele = document.querySelector(".all-container");
@@ -47,7 +48,7 @@ function App() {
     slider.scroll(scrollWidth, 0);
     slider.style.scrollBehavior = "auto";
   };
-
+  const [carregou, setCarregou] = useState(true);
   const [pokemanos, setPokemanos] = useState([]);
   const carregar = "https://pokeapi.co/api/v2/pokemon?limit=151";
   let loading = false;
@@ -57,20 +58,20 @@ function App() {
     const data = await res.json();
 
     function pokemonObject(result) {
-      const endOfLoading = () => {
-        result.forEach(async (pokemon, index) => {
-          index = index + 1;
-          loading = true;
-          const res = await fetch(
-            `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
-          );
-          const data = await res.json();
-
-          setPokemanos((currentList) => [...currentList, data]);
-          if (index === pokemanos.length - 1) loading = false;
-        });
-      };
-      endOfLoading(loading);
+      result.forEach(async (pokemon, index) => {
+        index = index + 1;
+        loading = true;
+        const res = await fetch(
+          `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
+        );
+        const data = await res.json();
+        console.log(index);
+        setPokemanos((currentList) => [...currentList, data]);
+        if (index === 151) {
+          loading = false;
+          setCarregou(loading);
+        }
+      });
     }
     pokemonObject(data.results);
   };
@@ -80,7 +81,13 @@ function App() {
   }, []);
 
   return (
+    <>{carregou && (
+      <div className="background-pokeball">
+        <img src={Pokeball} alt="Pokeball"></img>
+      </div>
+    )}
     <div className="app-container">
+      
       <div className="pokemon-container">
         <div className="all-container">
           <button className="btn prevSlide" onClick={previousSlideHandler}>
@@ -104,6 +111,7 @@ function App() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
